@@ -12,7 +12,7 @@ var routes = (
 	<Router history={hashHistory}>
 		<Route path='/' component={App}>
 			<IndexRoute component={Home}/>
-			<Route path=':tetreeName' component={Tetree} />
+			<Route path=':city/:territoryNumber' component={Tetree} />
 		</Route>
 	</Router>
 );
