@@ -4,8 +4,14 @@ var Address = React.createClass({
 
 	render: function() {
 		var address = this.props.address;
+		var streetAddress = address.address + ' ' + address.street
+		var mapsLink = 'http://maps.apple.com/?q=' + streetAddress;
 		return (
-			<div>{address.address} {address.street}</div>
+			<div>
+				<a href={mapsLink}>
+					{streetAddress}
+				</a>
+			</div>
 		);
 	}
 

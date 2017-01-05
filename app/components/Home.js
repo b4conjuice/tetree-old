@@ -5,6 +5,7 @@ var Link = ReactRouter.Link;
 var Home = React.createClass({
 	getInitialState: function() {
 		return {
+			loading: true,
 			sheetColumns: ['city', 'number', 'lastupdated', 'lastcovered'],
 			territoryList: [] 
 		};
@@ -19,11 +20,16 @@ var Home = React.createClass({
 				member.number = parseInt(member.number);
 			});
 			self.setState({
-				territoryList: territoryList
+				territoryList: territoryList,
+				loading: false
 			});
 		});
 	},
 	render: function() {
+		if (this.state.loading)
+			return (
+				<div>Loading</div>
+		);
 		var territoryList = this.state.territoryList.map(function(territory, index) {
 			return (
 				<div key={index}>

@@ -75,9 +75,9 @@ var App = React.createClass({
 		});
 		return (
 			<div className='main-container'>
-				<Link to='/'>
-					<h1>tetree</h1>
-				</Link>
+				<h1>
+					<Link to='/'>tetree</Link>
+				</h1>
 				{children}
 			</div>
 		);
