@@ -34068,11 +34068,11 @@
 				'div',
 				{ className: 'main-container' },
 				React.createElement(
-					Link,
-					{ to: '/' },
+					'h1',
+					null,
 					React.createElement(
-						'h1',
-						null,
+						Link,
+						{ to: '/' },
 						'tetree'
 					)
 				),
@@ -34097,6 +34097,7 @@
 
 		getInitialState: function () {
 			return {
+				loading: true,
 				sheetColumns: ['city', 'number', 'lastupdated', 'lastcovered'],
 				territoryList: []
 			};
@@ -34111,11 +34112,17 @@
 					member.number = parseInt(member.number);
 				});
 				self.setState({
-					territoryList: territoryList
+					territoryList: territoryList,
+					loading: false
 				});
 			});
 		},
 		render: function () {
+			if (this.state.loading) return React.createElement(
+				'div',
+				null,
+				'Loading'
+			);
 			var territoryList = this.state.territoryList.map(function (territory, index) {
 				return React.createElement(
 					'div',
@@ -34226,15 +34233,22 @@
 
 	var React = __webpack_require__(77);
 
+	// batch geo map
+	// <p><iframe src="https://batchgeo.com/map/ff7eb6fc00586a148a300b207637c253" height="550" style={{border:'1px solid #aaa'}}></iframe></p><p><small>View <a href="https://batchgeo.com/map/ff7eb6fc00586a148a300b207637c253">Paramount 1</a> in a full screen map</small></p>
 	var Map = React.createClass({
 		displayName: 'Map',
 
 
 		render: function () {
+			var mapstyle = {};
 			return React.createElement(
 				'div',
 				null,
-				'map'
+				React.createElement(
+					'h2',
+					null,
+					'map'
+				)
 			);
 		}
 
@@ -34261,6 +34275,11 @@
 			return React.createElement(
 				'div',
 				null,
+				React.createElement(
+					'h2',
+					null,
+					'address list'
+				),
 				addressList
 			);
 		}
@@ -34281,12 +34300,16 @@
 
 		render: function () {
 			var address = this.props.address;
+			var streetAddress = address.address + ' ' + address.street;
+			var mapsLink = 'http://maps.apple.com/?q=' + streetAddress;
 			return React.createElement(
 				'div',
 				null,
-				address.address,
-				' ',
-				address.street
+				React.createElement(
+					'a',
+					{ href: mapsLink },
+					streetAddress
+				)
 			);
 		}
 
