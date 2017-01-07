@@ -10,7 +10,7 @@ var Map = React.createClass({
 		}
 		return (
 			<div>
-				<h2>map</h2>
+				<h3>map</h3>
 			</div>
 		);
 	}

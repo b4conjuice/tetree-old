@@ -10,7 +10,7 @@ var AddressList = React.createClass({
 		});
 		return (
 			<div>
-				<h2>address list</h2>
+				<h3>address list</h3>
 				{addressList}
 			</div>
 		);
