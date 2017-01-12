@@ -34481,7 +34481,7 @@
 			});
 			return React.createElement(
 				'div',
-				{ className: 'main-container col-sm-12' },
+				{ className: 'main-container' },
 				React.createElement(
 					'div',
 					{ className: 'page-header text-center' },
