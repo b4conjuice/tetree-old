@@ -1,4 +1,5 @@
 var React = require('react');
+var ButtonWrapper = require('./ButtonWrapper');
 
 var Address = React.createClass({
 
@@ -8,9 +9,9 @@ var Address = React.createClass({
 		var mapsLink = 'http://maps.apple.com/?q=' + streetAddress;
 		return (
 			<div>
-				<a href={mapsLink}>
+				<ButtonWrapper href={mapsLink}>
 					{streetAddress}
-				</a>
+				</ButtonWrapper>
 			</div>
 		);
 	}

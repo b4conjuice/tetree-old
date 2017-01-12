@@ -6,6 +6,7 @@ var AddressList = require('./AddressList');
 var Tetree = React.createClass({
 	getInitialState: function() {
 		return {
+			loading: true,
 			sheetColumns: ['address', 'street', 'city', 'territory'],
 			territoryName: '',
 			addressList: []
@@ -23,6 +24,7 @@ var Tetree = React.createClass({
 				member.territory = parseInt(member.territory);
 			});
 			self.setState({
+				loading: false,
 				territoryName: territoryName,
 				addressList: addressList
 			});
@@ -32,6 +34,10 @@ var Tetree = React.createClass({
 		return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 	},
 	render: function() {
+		if (this.state.loading)
+			return (
+				<div>Loading</div>
+		);
 		return (
 			<div>
 				<Title title={this.state.territoryName} />

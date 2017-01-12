@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
+var ButtonWrapper = require('./ButtonWrapper');
 
 var Home = React.createClass({
 	getInitialState: function() {
@@ -54,7 +55,9 @@ var Home = React.createClass({
 			return (
 				<div key={index}>
 					<Link to={'/' + territory.city.toLowerCase() + '/' + territory.number}>
-						{territory.city} {territory.number}
+						<ButtonWrapper>
+							{territory.city} {territory.number}
+						</ButtonWrapper>
 					</Link>
 				</div>
 			);
@@ -62,7 +65,9 @@ var Home = React.createClass({
 		return (
 			<div>
 				<h2>Choose a territory</h2>
-				{territoryList}
+				<div >
+					{territoryList}
+				</div>
 			</div>
 		);
 	}

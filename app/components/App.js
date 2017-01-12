@@ -84,10 +84,12 @@ var App = React.createClass({
 			})
 		});
 		return (
-			<div className='main-container'>
-				<h1>
-					<Link to='/'>tetree</Link>
-				</h1>
+			<div className='main-container col-sm-12'>
+				<div className='page-header text-center'>
+					<h1>
+						<Link to='/'>tetree</Link>
+					</h1>
+				</div>
 				{children}
 			</div>
 		);
