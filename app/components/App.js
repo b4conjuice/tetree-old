@@ -53,18 +53,24 @@ var App = React.createClass({
 			self.setState({
 				sheetlist: sheetlist
 			});
-			// add sheetlist to localStorage
-			//localStorage.sheetlist = sheetlist;
+			// add sheetlist to sessionStorage
+			var data = {
+				sheetlist: sheetlist
+			};
+			sessionStorage.data = JSON.stringify(data);
 		});
 	},
 	componentWillMount: function() {
-		// console.log('localStorage', localStorage);
-		// if (localStorage.sheetlist)
-		// 	this.setState({
-		// 		sheetlist: localStorage.sheetlist
-		// 	});
-		// else
-		this.getSheetList();
+		if (sessionStorage.data) {
+			var data = JSON.parse(sessionStorage.data);
+			if (data.sheetlist) {
+				this.setState({
+					sheetlist: data.sheetlist
+				});
+			}
+		}
+		else
+			this.getSheetList();
 	},
 	render: function() {
 		var fetchData = this.fetchData;

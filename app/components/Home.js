@@ -12,18 +12,38 @@ var Home = React.createClass({
 	},
 	componentDidMount: function() {
 		var self = this;
-		var url = this.props.getUrl(this.props.sheetlist, 'Territory List');
-
-		this.props.fetchData(url, this.state.sheetColumns, function(territoryList) {
-
-			territoryList.forEach(function(member) {
-				member.number = parseInt(member.number);
-			});
-			self.setState({
-				territoryList: territoryList,
+		var data = JSON.parse(sessionStorage.data);
+		if (data.territoryList) {
+			this.setState({
+				territoryList: data.territoryList,
 				loading: false
 			});
-		});
+		}
+		else {
+			var url = this.props.getUrl(this.props.sheetlist, 'Territory List');
+
+			this.props.fetchData(url, this.state.sheetColumns, function(territoryList) {
+
+				territoryList.forEach(function(member) {
+					member.number = parseInt(member.number);
+				});
+				self.setState({
+					territoryList: territoryList,
+					loading: false
+				});
+				if (sessionStorage.data) {
+					var data = JSON.parse(sessionStorage.data);
+					data.territoryList = territoryList;
+					sessionStorage.data = JSON.stringify(data);
+				}
+				else {
+					var data = {
+						territoryList: territoryList
+					};
+					sessionStorage.data = JSON.stringify(data);	
+				}
+			});
+		}
 	},
 	render: function() {
 		if (this.state.loading)
