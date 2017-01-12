@@ -14,7 +14,7 @@ var Tetree = React.createClass({
 	componentDidMount: function() {
 		var self = this;
 		var territoryName = this.capitalize(this.props.routeParams.city) + ' ' + this.props.routeParams.territoryNumber;
-		var url = this.props.getUrl(territoryName);
+		var url = this.props.getUrl(this.props.sheetlist, territoryName);
 
 		this.props.fetchData(url, this.state.sheetColumns, function(addressList) {
 

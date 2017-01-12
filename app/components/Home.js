@@ -12,7 +12,7 @@ var Home = React.createClass({
 	},
 	componentDidMount: function() {
 		var self = this;
-		var url = this.props.getUrl('Territory List');
+		var url = this.props.getUrl(this.props.sheetlist, 'Territory List');
 
 		this.props.fetchData(url, this.state.sheetColumns, function(territoryList) {
 
