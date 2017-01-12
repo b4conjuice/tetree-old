@@ -34377,7 +34377,7 @@
 	var IndexRoute = ReactRouter.IndexRoute;
 	var App = __webpack_require__(315);
 	var Home = __webpack_require__(316);
-	var Tetree = __webpack_require__(317);
+	var Tetree = __webpack_require__(319);
 
 	var routes = React.createElement(
 		Router,
@@ -34451,18 +34451,22 @@
 				self.setState({
 					sheetlist: sheetlist
 				});
-				// add sheetlist to localStorage
-				//localStorage.sheetlist = sheetlist;
+				// add sheetlist to sessionStorage
+				var data = {
+					sheetlist: sheetlist
+				};
+				sessionStorage.data = JSON.stringify(data);
 			});
 		},
 		componentWillMount: function () {
-			// console.log('localStorage', localStorage);
-			// if (localStorage.sheetlist)
-			// 	this.setState({
-			// 		sheetlist: localStorage.sheetlist
-			// 	});
-			// else
-			this.getSheetList();
+			if (sessionStorage.data) {
+				var data = JSON.parse(sessionStorage.data);
+				if (data.sheetlist) {
+					this.setState({
+						sheetlist: data.sheetlist
+					});
+				}
+			} else this.getSheetList();
 		},
 		render: function () {
 			var fetchData = this.fetchData;
@@ -34477,14 +34481,18 @@
 			});
 			return React.createElement(
 				'div',
-				{ className: 'main-container' },
+				{ className: 'main-container col-sm-12' },
 				React.createElement(
-					'h1',
-					null,
+					'div',
+					{ className: 'page-header text-center' },
 					React.createElement(
-						Link,
-						{ to: '/' },
-						'tetree'
+						'h1',
+						null,
+						React.createElement(
+							Link,
+							{ to: '/' },
+							'tetree'
+						)
 					)
 				),
 				children
@@ -34502,6 +34510,7 @@
 	var React = __webpack_require__(77);
 	var ReactRouter = __webpack_require__(258);
 	var Link = ReactRouter.Link;
+	var ButtonWrapper = __webpack_require__(317);
 
 	var Home = React.createClass({
 		displayName: 'Home',
@@ -34515,18 +34524,36 @@
 		},
 		componentDidMount: function () {
 			var self = this;
-			var url = this.props.getUrl(this.props.sheetlist, 'Territory List');
-
-			this.props.fetchData(url, this.state.sheetColumns, function (territoryList) {
-
-				territoryList.forEach(function (member) {
-					member.number = parseInt(member.number);
-				});
-				self.setState({
-					territoryList: territoryList,
+			var data = JSON.parse(sessionStorage.data);
+			if (data.territoryList) {
+				this.setState({
+					territoryList: data.territoryList,
 					loading: false
 				});
-			});
+			} else {
+				var url = this.props.getUrl(this.props.sheetlist, 'Territory List');
+
+				this.props.fetchData(url, this.state.sheetColumns, function (territoryList) {
+
+					territoryList.forEach(function (member) {
+						member.number = parseInt(member.number);
+					});
+					self.setState({
+						territoryList: territoryList,
+						loading: false
+					});
+					if (sessionStorage.data) {
+						var data = JSON.parse(sessionStorage.data);
+						data.territoryList = territoryList;
+						sessionStorage.data = JSON.stringify(data);
+					} else {
+						var data = {
+							territoryList: territoryList
+						};
+						sessionStorage.data = JSON.stringify(data);
+					}
+				});
+			}
 		},
 		render: function () {
 			if (this.state.loading) return React.createElement(
@@ -34541,9 +34568,13 @@
 					React.createElement(
 						Link,
 						{ to: '/' + territory.city.toLowerCase() + '/' + territory.number },
-						territory.city,
-						' ',
-						territory.number
+						React.createElement(
+							ButtonWrapper,
+							null,
+							territory.city,
+							' ',
+							territory.number
+						)
 					)
 				);
 			});
@@ -34555,7 +34586,11 @@
 					null,
 					'Choose a territory'
 				),
-				territoryList
+				React.createElement(
+					'div',
+					null,
+					territoryList
+				)
 			);
 		}
 
@@ -34568,15 +34603,56 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(77);
-	var Title = __webpack_require__(318);
-	var Map = __webpack_require__(319);
-	var AddressList = __webpack_require__(320);
+	var styles = __webpack_require__(318);
+
+	function ButtonWrapper(props) {
+		if (props.href) {
+			return React.createElement(
+				'a',
+				{ type: 'button', className: 'btn btn-lg btn-info', href: props.href, style: styles.space },
+				props.children
+			);
+		} else {
+			return React.createElement(
+				'button',
+				{ type: 'button', className: 'btn btn-lg btn-info', style: styles.space },
+				props.children
+			);
+		}
+	};
+
+	module.exports = ButtonWrapper;
+
+/***/ },
+/* 318 */
+/***/ function(module, exports) {
+
+	var styles = {
+		transparentBg: {
+			background: 'transparent'
+		},
+		space: {
+			marginTop: '25px'
+		}
+	};
+
+	module.exports = styles;
+
+/***/ },
+/* 319 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(77);
+	var Title = __webpack_require__(320);
+	var Map = __webpack_require__(321);
+	var AddressList = __webpack_require__(322);
 
 	var Tetree = React.createClass({
 		displayName: 'Tetree',
 
 		getInitialState: function () {
 			return {
+				loading: true,
 				sheetColumns: ['address', 'street', 'city', 'territory'],
 				territoryName: '',
 				addressList: []
@@ -34594,6 +34670,7 @@
 					member.territory = parseInt(member.territory);
 				});
 				self.setState({
+					loading: false,
 					territoryName: territoryName,
 					addressList: addressList
 				});
@@ -34603,6 +34680,11 @@
 			return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 		},
 		render: function () {
+			if (this.state.loading) return React.createElement(
+				'div',
+				null,
+				'Loading'
+			);
 			return React.createElement(
 				'div',
 				null,
@@ -34617,7 +34699,7 @@
 	module.exports = Tetree;
 
 /***/ },
-/* 318 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(77);
@@ -34639,7 +34721,7 @@
 	module.exports = Title;
 
 /***/ },
-/* 319 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(77);
@@ -34668,11 +34750,11 @@
 	module.exports = Map;
 
 /***/ },
-/* 320 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(77);
-	var Address = __webpack_require__(321);
+	var Address = __webpack_require__(323);
 
 	var AddressList = React.createClass({
 		displayName: 'AddressList',
@@ -34700,10 +34782,11 @@
 	module.exports = AddressList;
 
 /***/ },
-/* 321 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(77);
+	var ButtonWrapper = __webpack_require__(317);
 
 	var Address = React.createClass({
 		displayName: 'Address',
@@ -34717,7 +34800,7 @@
 				'div',
 				null,
 				React.createElement(
-					'a',
+					ButtonWrapper,
 					{ href: mapsLink },
 					streetAddress
 				)
