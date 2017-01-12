@@ -34580,7 +34580,7 @@
 			});
 			return React.createElement(
 				'div',
-				null,
+				{ className: 'text-center' },
 				React.createElement(
 					'h2',
 					null,
@@ -34588,7 +34588,7 @@
 				),
 				React.createElement(
 					'div',
-					null,
+					{ className: 'col-sm-12' },
 					territoryList
 				)
 			);
@@ -34609,13 +34609,13 @@
 		if (props.href) {
 			return React.createElement(
 				'a',
-				{ type: 'button', className: 'btn btn-lg btn-info', href: props.href, style: styles.space },
+				{ type: 'button', className: 'btn btn-lg btn-info col-sm-12', href: props.href, style: styles.space },
 				props.children
 			);
 		} else {
 			return React.createElement(
 				'button',
-				{ type: 'button', className: 'btn btn-lg btn-info', style: styles.space },
+				{ type: 'button', className: 'btn btn-lg btn-info col-sm-12', style: styles.space },
 				props.children
 			);
 		}
@@ -34687,7 +34687,7 @@
 			);
 			return React.createElement(
 				'div',
-				null,
+				{ className: 'text-center' },
 				React.createElement(Title, { title: this.state.territoryName }),
 				React.createElement(Map, null),
 				React.createElement(AddressList, { addressList: this.state.addressList })
