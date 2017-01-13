@@ -13,8 +13,10 @@ var Home = React.createClass({
 	},
 	componentDidMount: function() {
 		var self = this;
-		var data = JSON.parse(sessionStorage.data);
-		if (data.territoryList) {
+		var data;
+		if (sessionStorage.data)
+			data = JSON.parse(sessionStorage.data);
+		if (data && data.territoryList) {
 			this.setState({
 				territoryList: data.territoryList,
 				loading: false
