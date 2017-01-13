@@ -34534,7 +34534,7 @@
 		getInitialState: function () {
 			return {
 				loading: true,
-				sheetColumns: ['city', 'number', 'lastupdated', 'lastcovered'],
+				sheetColumns: ['city', 'number', 'lastupdated', 'lastcovered', 'map'],
 				territoryList: []
 			};
 		},
@@ -34553,6 +34553,7 @@
 
 					territoryList.forEach(function (member) {
 						member.number = parseInt(member.number);
+						member.cityNumber = member.city + ' ' + member.number;
 					});
 					self.setState({
 						territoryList: territoryList,
@@ -34571,26 +34572,43 @@
 				});
 			}
 		},
+		handleClick: function (e) {
+			var cityNumber = e.target.id;
+			var city = cityNumber.split(' ')[0];
+			var number = cityNumber.split(' ')[1];
+			var territoryList = this.state.territoryList;
+			var matchingTerritory = {};
+			territoryList.forEach(function (territory) {
+				if (territory.cityNumber === cityNumber) {
+					matchingTerritory = territory;
+					return;
+				}
+			});
+			var map = matchingTerritory.map;
+			this.props.router.push({
+				pathname: '/' + city.toLowerCase() + '/' + number,
+				state: {
+					map: map
+				}
+			});
+		},
 		render: function () {
 			if (this.state.loading) return React.createElement(
 				'div',
 				null,
 				'Loading'
 			);
+			var handleClick = this.handleClick;
 			var territoryList = this.state.territoryList.map(function (territory, index) {
 				return React.createElement(
 					'div',
 					{ key: index },
 					React.createElement(
-						Link,
-						{ to: '/' + territory.city.toLowerCase() + '/' + territory.number },
-						React.createElement(
-							ButtonWrapper,
-							null,
-							territory.city,
-							' ',
-							territory.number
-						)
+						ButtonWrapper,
+						{ onClick: handleClick },
+						territory.city,
+						' ',
+						territory.number
 					)
 				);
 			});
@@ -34628,6 +34646,12 @@
 				{ type: 'button', className: 'btn btn-lg btn-info col-sm-12', href: props.href, style: styles.space },
 				props.children
 			);
+		} else if (props.onClick) {
+			return React.createElement(
+				'button',
+				{ id: props.children[0] + ' ' + props.children[2], type: 'button', className: 'btn btn-lg btn-info col-sm-12', onClick: props.onClick, style: styles.space },
+				props.children
+			);
 		} else {
 			return React.createElement(
 				'button',
@@ -34656,13 +34680,15 @@
 				loading: true,
 				sheetColumns: ['address', 'street', 'city', 'territory'],
 				territoryName: '',
-				addressList: []
+				addressList: [],
+				map: ''
 			};
 		},
 		componentDidMount: function () {
 			var self = this;
 			var territoryName = this.capitalize(this.props.routeParams.city) + ' ' + this.props.routeParams.territoryNumber;
 			var url = this.props.getUrl(this.props.sheetlist, territoryName);
+			var map = this.props.location.state.map;
 
 			this.props.fetchData(url, this.state.sheetColumns, function (addressList) {
 
@@ -34673,7 +34699,8 @@
 				self.setState({
 					loading: false,
 					territoryName: territoryName,
-					addressList: addressList
+					addressList: addressList,
+					map: map
 				});
 			});
 		},
@@ -34690,7 +34717,7 @@
 				'div',
 				{ className: 'text-center' },
 				React.createElement(Title, { title: this.state.territoryName }),
-				React.createElement(Map, null),
+				React.createElement(Map, { map: this.state.map }),
 				React.createElement(AddressList, { addressList: this.state.addressList })
 			);
 		}
@@ -34742,6 +34769,11 @@
 					'h3',
 					null,
 					'map'
+				),
+				React.createElement(
+					'a',
+					{ href: this.props.map },
+					'batchgeo'
 				)
 			);
 		}
