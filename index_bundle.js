@@ -34753,6 +34753,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(77);
+	var ButtonWrapper = __webpack_require__(318);
 
 	// batch geo map
 	// <p><iframe src="https://batchgeo.com/map/ff7eb6fc00586a148a300b207637c253" height="550" style={{border:'1px solid #aaa'}}></iframe></p><p><small>View <a href="https://batchgeo.com/map/ff7eb6fc00586a148a300b207637c253">Paramount 1</a> in a full screen map</small></p>
@@ -34771,7 +34772,7 @@
 					'map'
 				),
 				React.createElement(
-					'a',
+					ButtonWrapper,
 					{ href: this.props.map },
 					'batchgeo'
 				)
