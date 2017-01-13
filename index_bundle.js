@@ -34376,7 +34376,7 @@
 	var hashHistory = ReactRouter.hashHistory;
 	var IndexRoute = ReactRouter.IndexRoute;
 	var App = __webpack_require__(315);
-	var Home = __webpack_require__(316);
+	var Home = __webpack_require__(317);
 	var Tetree = __webpack_require__(319);
 
 	var routes = React.createElement(
@@ -34399,6 +34399,7 @@
 	var React = __webpack_require__(77);
 	var ReactRouter = __webpack_require__(258);
 	var Link = ReactRouter.Link;
+	var styles = __webpack_require__(316);
 
 	var App = React.createClass({
 		displayName: 'App',
@@ -34505,12 +34506,30 @@
 
 /***/ },
 /* 316 */
+/***/ function(module, exports) {
+
+	var styles = {
+		transparentBg: {
+			background: 'transparent'
+		},
+		space: {
+			marginTop: '25px'
+		},
+		mobileFont: {
+			fontSize: '10em'
+		}
+	};
+
+	module.exports = styles;
+
+/***/ },
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(77);
 	var ReactRouter = __webpack_require__(258);
 	var Link = ReactRouter.Link;
-	var ButtonWrapper = __webpack_require__(317);
+	var ButtonWrapper = __webpack_require__(318);
 
 	var Home = React.createClass({
 		displayName: 'Home',
@@ -34599,11 +34618,11 @@
 	module.exports = Home;
 
 /***/ },
-/* 317 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(77);
-	var styles = __webpack_require__(318);
+	var styles = __webpack_require__(316);
 
 	function ButtonWrapper(props) {
 		if (props.href) {
@@ -34622,21 +34641,6 @@
 	};
 
 	module.exports = ButtonWrapper;
-
-/***/ },
-/* 318 */
-/***/ function(module, exports) {
-
-	var styles = {
-		transparentBg: {
-			background: 'transparent'
-		},
-		space: {
-			marginTop: '25px'
-		}
-	};
-
-	module.exports = styles;
 
 /***/ },
 /* 319 */
@@ -34786,7 +34790,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(77);
-	var ButtonWrapper = __webpack_require__(317);
+	var ButtonWrapper = __webpack_require__(318);
 
 	var Address = React.createClass({
 		displayName: 'Address',
