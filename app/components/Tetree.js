@@ -9,13 +9,15 @@ var Tetree = React.createClass({
 			loading: true,
 			sheetColumns: ['address', 'street', 'city', 'territory'],
 			territoryName: '',
-			addressList: []
+			addressList: [],
+			map: ''
 		};
 	},
 	componentDidMount: function() {
 		var self = this;
 		var territoryName = this.capitalize(this.props.routeParams.city) + ' ' + this.props.routeParams.territoryNumber;
 		var url = this.props.getUrl(this.props.sheetlist, territoryName);
+		var map = this.props.location.state.map;
 
 		this.props.fetchData(url, this.state.sheetColumns, function(addressList) {
 
@@ -26,7 +28,8 @@ var Tetree = React.createClass({
 			self.setState({
 				loading: false,
 				territoryName: territoryName,
-				addressList: addressList
+				addressList: addressList,
+				map: map
 			});
 		});
 	},
@@ -41,7 +44,7 @@ var Tetree = React.createClass({
 		return (
 			<div className='text-center'>
 				<Title title={this.state.territoryName} />
-				<Map />
+				<Map map={this.state.map} />
 				<AddressList addressList={this.state.addressList} />
 			</div>
 		);
