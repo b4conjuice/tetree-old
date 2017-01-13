@@ -34762,7 +34762,11 @@
 
 
 		render: function () {
-			var mapstyle = {};
+			var map = this.props.map;
+			//https://batchgeo.com/map/ff7eb6fc00586a148a300b207637c253
+			//mobile: batchgeo://map/ff7eb6fc00586a148a300b207637c253
+			var mobile = map.replace('https://batchgeo.com/', "batchgeo://");
+			console.log(mobile);
 			return React.createElement(
 				'div',
 				null,
@@ -34773,8 +34777,13 @@
 				),
 				React.createElement(
 					ButtonWrapper,
-					{ href: this.props.map },
-					'batchgeo'
+					{ href: map },
+					'batchgeo site'
+				),
+				React.createElement(
+					ButtonWrapper,
+					{ href: mobile },
+					'batchgeo app'
 				)
 			);
 		}
