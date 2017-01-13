@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server --port 8082",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "bude": "npm run build && npm run deploy"
   },
   "author": "daniel lopez",
   "license": "ISC",
