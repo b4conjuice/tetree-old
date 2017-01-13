@@ -63,9 +63,9 @@ var Home = React.createClass({
 			);
 		});
 		return (
-			<div>
+			<div className='text-center'>
 				<h2>Choose a territory</h2>
-				<div >
+				<div className='col-sm-12'>
 					{territoryList}
 				</div>
 			</div>

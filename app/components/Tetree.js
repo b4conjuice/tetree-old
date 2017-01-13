@@ -39,7 +39,7 @@ var Tetree = React.createClass({
 				<div>Loading</div>
 		);
 		return (
-			<div>
+			<div className='text-center'>
 				<Title title={this.state.territoryName} />
 				<Map />
 				<AddressList addressList={this.state.addressList} />

@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
+var styles = require('../styles');
 
 var App = React.createClass({
 	getInitialState: function() {
@@ -84,7 +85,7 @@ var App = React.createClass({
 			})
 		});
 		return (
-			<div className='main-container col-sm-12'>
+			<div className='main-container'>
 				<div className='page-header text-center'>
 					<h1>
 						<Link to='/'>tetree</Link>
