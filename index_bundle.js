@@ -34773,7 +34773,7 @@
 				),
 				React.createElement(
 					ButtonWrapper,
-					{ href: this.props.map },
+					{ href: 'http://google.com' },
 					'batchgeo'
 				)
 			);
