@@ -34514,9 +34514,6 @@
 		},
 		space: {
 			marginTop: '25px'
-		},
-		mobileFont: {
-			fontSize: '10em'
 		}
 	};
 
