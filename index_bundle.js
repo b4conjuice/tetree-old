@@ -34774,7 +34774,7 @@
 				React.createElement(
 					ButtonWrapper,
 					{ href: this.props.map },
-					this.props.map
+					'batchgeo'
 				)
 			);
 		}
