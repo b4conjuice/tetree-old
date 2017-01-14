@@ -34459,7 +34459,7 @@
 				sessionStorage.data = JSON.stringify(data);
 			});
 		},
-		componentWillMount: function () {
+		componentDidMount: function () {
 			if (sessionStorage.data) {
 				var data = JSON.parse(sessionStorage.data);
 				if (data.sheetlist) {
@@ -34540,8 +34540,9 @@
 		},
 		componentDidMount: function () {
 			var self = this;
-			var data = JSON.parse(sessionStorage.data);
-			if (data.territoryList) {
+			var data;
+			if (sessionStorage.data) data = JSON.parse(sessionStorage.data);
+			if (data && data.territoryList) {
 				this.setState({
 					territoryList: data.territoryList,
 					loading: false
@@ -34762,30 +34763,29 @@
 
 
 		render: function () {
-			var map = this.props.map;
-			//https://batchgeo.com/map/ff7eb6fc00586a148a300b207637c253
-			//mobile: batchgeo://map/ff7eb6fc00586a148a300b207637c253
-			var mobile = map.replace('https://batchgeo.com/', "batchgeo://");
-			console.log(mobile);
-			return React.createElement(
-				'div',
-				null,
-				React.createElement(
-					'h3',
+			if (this.props.map) {
+				var map = this.props.map;
+				var mobile = map.replace('https://batchgeo.com/', "batchgeo://");
+				return React.createElement(
+					'div',
 					null,
-					'map'
-				),
-				React.createElement(
-					ButtonWrapper,
-					{ href: map },
-					'batchgeo site'
-				),
-				React.createElement(
-					ButtonWrapper,
-					{ href: mobile },
-					'batchgeo app'
-				)
-			);
+					React.createElement(
+						'h3',
+						null,
+						'map'
+					),
+					React.createElement(
+						ButtonWrapper,
+						{ href: map },
+						'batchgeo site'
+					),
+					React.createElement(
+						ButtonWrapper,
+						{ href: mobile },
+						'batchgeo app'
+					)
+				);
+			} else return null;
 		}
 
 	});
