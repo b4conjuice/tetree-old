@@ -61,7 +61,7 @@ var App = React.createClass({
 			sessionStorage.data = JSON.stringify(data);
 		});
 	},
-	componentWillMount: function() {
+	componentDidMount: function() {
 		if (sessionStorage.data) {
 			var data = JSON.parse(sessionStorage.data);
 			if (data.sheetlist) {
