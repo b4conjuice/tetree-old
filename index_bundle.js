@@ -34376,8 +34376,8 @@
 	var hashHistory = ReactRouter.hashHistory;
 	var IndexRoute = ReactRouter.IndexRoute;
 	var App = __webpack_require__(315);
-	var Home = __webpack_require__(317);
-	var Tetree = __webpack_require__(319);
+	var Home = __webpack_require__(318);
+	var Tetree = __webpack_require__(320);
 
 	var routes = React.createElement(
 		Router,
@@ -34400,6 +34400,7 @@
 	var ReactRouter = __webpack_require__(258);
 	var Link = ReactRouter.Link;
 	var styles = __webpack_require__(316);
+	__webpack_require__(317);
 
 	var App = React.createClass({
 		displayName: 'App',
@@ -34433,9 +34434,12 @@
 			request.send();
 		},
 		getUrl: function (sheetlist, sheetName) {
-
-			var key = '1jdG2zHutoYaBry2HtG-iqDbTo79WRHrFsF6H53740-k';
 			var sheet = sheetlist.indexOf(sheetName) + 1;
+			var key = '1jdG2zHutoYaBry2HtG-iqDbTo79WRHrFsF6H53740-k';
+			if (sheet < 1) {
+				console.log('sheet not found. default to first sheet');
+				sheet = 3;
+			}
 			var url = 'https://spreadsheets.google.com/feeds/list/' + key + '/' + sheet + '/public/values?alt=json';
 			return url;
 		},
@@ -34460,14 +34464,16 @@
 			});
 		},
 		componentDidMount: function () {
+			console.log('sessionStorage.data', sessionStorage.data);
 			if (sessionStorage.data) {
 				var data = JSON.parse(sessionStorage.data);
 				if (data.sheetlist) {
 					this.setState({
 						sheetlist: data.sheetlist
 					});
-				}
+				} else this.getSheetList();
 			} else this.getSheetList();
+			console.log('state.sheetlist', this.state.sheetlist);
 		},
 		render: function () {
 			var fetchData = this.fetchData;
@@ -34521,12 +34527,18 @@
 
 /***/ },
 /* 317 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(77);
 	var ReactRouter = __webpack_require__(258);
 	var Link = ReactRouter.Link;
-	var ButtonWrapper = __webpack_require__(318);
+	var ButtonWrapper = __webpack_require__(319);
 
 	var Home = React.createClass({
 		displayName: 'Home',
@@ -34634,7 +34646,7 @@
 	module.exports = Home;
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(77);
@@ -34644,19 +34656,19 @@
 		if (props.href) {
 			return React.createElement(
 				'a',
-				{ type: 'button', className: 'btn btn-lg btn-info col-sm-12', href: props.href, style: styles.space },
+				{ type: 'button', className: 'btn btn-lg col-sm-12', href: props.href, style: styles.space },
 				props.children
 			);
 		} else if (props.onClick) {
 			return React.createElement(
 				'button',
-				{ id: props.children[0] + ' ' + props.children[2], type: 'button', className: 'btn btn-lg btn-info col-sm-12', onClick: props.onClick, style: styles.space },
+				{ id: props.children[0] + ' ' + props.children[2], type: 'button', className: 'btn btn-lg col-sm-12', onClick: props.onClick, style: styles.space },
 				props.children
 			);
 		} else {
 			return React.createElement(
 				'button',
-				{ type: 'button', className: 'btn btn-lg btn-info col-sm-12', style: styles.space },
+				{ type: 'button', className: 'btn btn-lg col-sm-12', style: styles.space },
 				props.children
 			);
 		}
@@ -34665,13 +34677,13 @@
 	module.exports = ButtonWrapper;
 
 /***/ },
-/* 319 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(77);
-	var Title = __webpack_require__(320);
-	var Map = __webpack_require__(321);
-	var AddressList = __webpack_require__(322);
+	var Title = __webpack_require__(321);
+	var Map = __webpack_require__(322);
+	var AddressList = __webpack_require__(323);
 
 	var Tetree = React.createClass({
 		displayName: 'Tetree',
@@ -34728,7 +34740,7 @@
 	module.exports = Tetree;
 
 /***/ },
-/* 320 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(77);
@@ -34750,11 +34762,11 @@
 	module.exports = Title;
 
 /***/ },
-/* 321 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(77);
-	var ButtonWrapper = __webpack_require__(318);
+	var ButtonWrapper = __webpack_require__(319);
 
 	// batch geo map
 	// <p><iframe src="https://batchgeo.com/map/ff7eb6fc00586a148a300b207637c253" height="550" style={{border:'1px solid #aaa'}}></iframe></p><p><small>View <a href="https://batchgeo.com/map/ff7eb6fc00586a148a300b207637c253">Paramount 1</a> in a full screen map</small></p>
@@ -34775,14 +34787,22 @@
 						'map'
 					),
 					React.createElement(
-						ButtonWrapper,
-						{ href: map },
-						'batchgeo site'
+						'div',
+						null,
+						React.createElement(
+							ButtonWrapper,
+							{ href: map },
+							'batchgeo site'
+						)
 					),
 					React.createElement(
-						ButtonWrapper,
-						{ href: mobile },
-						'batchgeo app'
+						'div',
+						null,
+						React.createElement(
+							ButtonWrapper,
+							{ href: mobile },
+							'batchgeo app'
+						)
 					)
 				);
 			} else return null;
@@ -34793,11 +34813,11 @@
 	module.exports = Map;
 
 /***/ },
-/* 322 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(77);
-	var Address = __webpack_require__(323);
+	var Address = __webpack_require__(324);
 
 	var AddressList = React.createClass({
 		displayName: 'AddressList',
@@ -34825,11 +34845,11 @@
 	module.exports = AddressList;
 
 /***/ },
-/* 323 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(77);
-	var ButtonWrapper = __webpack_require__(318);
+	var ButtonWrapper = __webpack_require__(319);
 
 	var Address = React.createClass({
 		displayName: 'Address',
