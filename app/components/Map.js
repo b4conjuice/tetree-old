@@ -12,12 +12,16 @@ var Map = React.createClass({
 			return (
 				<div>
 					<h3>map</h3>
-					<ButtonWrapper href={map}>
-						batchgeo site
-					</ButtonWrapper>
-					<ButtonWrapper href={mobile}>
-						batchgeo app
-					</ButtonWrapper>
+					<div>
+						<ButtonWrapper href={map}>
+							batchgeo site
+						</ButtonWrapper>
+					</div>
+					<div>
+						<ButtonWrapper href={mobile}>
+							batchgeo app
+						</ButtonWrapper>
+					</div>
 				</div>
 			);
 		}

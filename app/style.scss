@@ -1,0 +1,22 @@
+$blue: rgb(139, 157, 195);
+$darkBlue: rgb(059, 089, 152);
+$lightBlue: rgb(223, 227, 238);
+$grey: rgb(247, 247, 247);
+$white: rgb(255, 255, 255);
+
+h1 a {
+	color: $darkBlue;
+}
+
+h1 a:focus {
+	text-decoration: none;
+}
+
+h1, h2, h3 {
+	margin-bottom: 0;
+}
+
+.btn {
+	background: $darkBlue;
+	color: $grey;
+}
