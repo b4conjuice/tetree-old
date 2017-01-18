@@ -2,6 +2,7 @@ var React = require('react');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
 var styles = require('../styles');
+require('../style.scss');
 
 var App = React.createClass({
 	getInitialState: function() {
@@ -35,9 +36,12 @@ var App = React.createClass({
 		request.send();
 	},
 	getUrl: function(sheetlist, sheetName) {
-
-		var key = '1jdG2zHutoYaBry2HtG-iqDbTo79WRHrFsF6H53740-k';
 		var sheet = sheetlist.indexOf(sheetName) + 1;
+		var key = '1jdG2zHutoYaBry2HtG-iqDbTo79WRHrFsF6H53740-k';
+		if (sheet < 1) {
+			console.log('sheet not found. default to first sheet');
+			sheet = 3;
+		}
 		var url = 'https://spreadsheets.google.com/feeds/list/' + key + '/' + sheet + '/public/values?alt=json';
 		return url;
 	},
@@ -62,6 +66,7 @@ var App = React.createClass({
 		});
 	},
 	componentDidMount: function() {
+		console.log('sessionStorage.data', sessionStorage.data);
 		if (sessionStorage.data) {
 			var data = JSON.parse(sessionStorage.data);
 			if (data.sheetlist) {
@@ -69,9 +74,12 @@ var App = React.createClass({
 					sheetlist: data.sheetlist
 				});
 			}
+			else
+				this.getSheetList();
 		}
 		else
 			this.getSheetList();
+		console.log('state.sheetlist', this.state.sheetlist);
 	},
 	render: function() {
 		var fetchData = this.fetchData;
