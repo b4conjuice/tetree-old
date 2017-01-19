@@ -34464,7 +34464,6 @@
 			});
 		},
 		componentDidMount: function () {
-			console.log('sessionStorage.data', sessionStorage.data);
 			if (sessionStorage.data) {
 				var data = JSON.parse(sessionStorage.data);
 				if (data.sheetlist) {
@@ -34473,7 +34472,6 @@
 					});
 				} else this.getSheetList();
 			} else this.getSheetList();
-			console.log('state.sheetlist', this.state.sheetlist);
 		},
 		render: function () {
 			var fetchData = this.fetchData;
