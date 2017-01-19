@@ -33,7 +33,7 @@ module.exports = {
 	},
 	plugins: [
 		HTMLWebpackPluginConfig,
-		new ExtractTextPlugin('/style.css', {
+		new ExtractTextPlugin('style.css', {
 	    	allChunks: true
 		})
 	]
