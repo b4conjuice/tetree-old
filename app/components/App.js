@@ -7,7 +7,8 @@ require('../style.scss');
 var App = React.createClass({
 	getInitialState: function() {
 		return {
-			sheetlist: ['Territory List', 'Master'] 
+			sheetlist: ['Territory List', 'Master'],
+			keys: {}
 		};
 	},
 	fetchData: function(url, props, callback) {
@@ -35,15 +36,38 @@ var App = React.createClass({
 		};
 		request.send();
 	},
-	getUrl: function(sheetlist, sheetName) {
+	getUrl: function(sheetlist, sheetName, city) {
 		var sheet = sheetlist.indexOf(sheetName) + 1;
-		var key = '1jdG2zHutoYaBry2HtG-iqDbTo79WRHrFsF6H53740-k';
 		if (sheet < 1) {
 			console.log('sheet not found. default to first sheet');
 			sheet = 3;
 		}
+		var key = ''
+		if (city == undefined)
+			key = '1Vgeg3FKAf9veuoEI3H591Hx4Te1YARCIEEtAkE3waGg';// '1jdG2zHutoYaBry2HtG-iqDbTo79WRHrFsF6H53740-k';
+		else {
+			key = this.getKey(city);
+			sheet = parseInt(sheetName) + 3;
+		}
 		var url = 'https://spreadsheets.google.com/feeds/list/' + key + '/' + sheet + '/public/values?alt=json';
 		return url;
+	},
+	setCityInfo: function(cities) {
+
+	},
+	setKeys: function(keys) {
+		this.setState({
+			keys: keys
+		});
+		console.log(this.state.keys);
+	},
+	getKey: function(city) {
+		var keys = {
+			paramount: '1WXHx6HYhOFsmwOjRldn4PyIQMVLQGjdI328vvRGF-2w',
+			bellflower: '1ndQQ-pypMXV-WdkzY75pF9PysAip_x1qTMfkRJxiDjM',
+			downey: '1qQx0JnimgNS3zrjdnEEjotVPjNTgt1tDmcInXR2es6g'
+		};
+		return keys[city];
 	},
 	getSheetList: function() {
 		var self = this;
@@ -59,24 +83,24 @@ var App = React.createClass({
 				sheetlist: sheetlist
 			});
 			// add sheetlist to sessionStorage
-			var data = {
-				sheetlist: sheetlist
-			};
-			sessionStorage.data = JSON.stringify(data);
+			// var data = {
+			// 	sheetlist: sheetlist
+			// };
+			// sessionStorage.data = JSON.stringify(data);
 		});
 	},
 	componentDidMount: function() {
-		if (sessionStorage.data) {
-			var data = JSON.parse(sessionStorage.data);
-			if (data.sheetlist) {
-				this.setState({
-					sheetlist: data.sheetlist
-				});
-			}
-			else
-				this.getSheetList();
-		}
-		else
+		// if (sessionStorage.data) {
+		// 	var data = JSON.parse(sessionStorage.data);
+		// 	if (data.sheetlist) {
+		// 		this.setState({
+		// 			sheetlist: data.sheetlist
+		// 		});
+		// 	}
+		// 	else
+		// 		this.getSheetList();
+		// }
+		//else
 			this.getSheetList();
 	},
 	render: function() {
@@ -87,7 +111,8 @@ var App = React.createClass({
 			return React.cloneElement(child, {
 				fetchData: fetchData,
 				getUrl: getUrl,
-				sheetlist: sheetlist
+				sheetlist: sheetlist,
+				setKeys: this.setKeys
 			})
 		});
 		return (

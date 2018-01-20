@@ -15,12 +15,18 @@ var Tetree = React.createClass({
 	},
 	componentDidMount: function() {
 		var self = this;
-		var territoryName = this.capitalize(this.props.routeParams.city) + ' ' + this.props.routeParams.territoryNumber;
-		var url = this.props.getUrl(this.props.sheetlist, territoryName);
+		var city = this.props.routeParams.city;
+		var number = this.props.routeParams.territoryNumber
+		var territoryName = this.capitalize(city) + ' ' + number;
+		//var url = this.props.getUrl(this.props.sheetlist, territoryName, city);
+		var url = this.props.getUrl([], number, city);
 		var map = this.props.location.state.map;
 
 		this.props.fetchData(url, this.state.sheetColumns, function(addressList) {
 
+			addressList = addressList.filter(function(address) {
+				return !isNaN(address.address);
+			});
 			addressList.forEach(function(member) {
 				member.address = parseInt(member.address);
 				member.territory = parseInt(member.territory);
